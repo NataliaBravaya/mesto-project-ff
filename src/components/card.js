@@ -1,5 +1,3 @@
-import {initialCards} from './cards'
-
 export const cardTemplate = document.querySelector('#card-template').content;
 
 
