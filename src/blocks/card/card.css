@@ -5,6 +5,7 @@
 @import url('__delete-button/card__delete-button.css');
 @import url('__title/card__title.css');
 
+
 .card {
   font-family: 'Inter', Arial, sans-serif;
   -webkit-border-radius: 10px;
@@ -13,3 +14,4 @@
   position: relative;
   overflow: hidden;
 }
+
