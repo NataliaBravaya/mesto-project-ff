@@ -34,8 +34,8 @@ export function createCard(cardTemplate, cardData, deleteCallback, likeCallback,
     return cardElement;
 }
 
-export function deleteCard (event) {
-    deleteCardApi(card._id)
+export function deleteCard (event, cardId) {
+    deleteCardApi(cardId)
         .then(() => event.target.closest(".card").remove())
         .catch((err) => console.log(`Ошибка: ${err}`));
 }

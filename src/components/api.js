@@ -74,9 +74,6 @@ export function postNewCard(name, link){
 }
 
 export function deleteCard(cardId){
-    console.log(config.headers)
-    console.log(config.baseURL)
-    console.log(cardId)
     return fetch(`${config.baseURL}/cards/${cardId}`, {
         headers: config.headers,
         method: "DELETE",

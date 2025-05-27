@@ -1,11 +1,11 @@
 import "./pages/index.css";
 
 import { initialCards } from "./components/cards";
-import { createCard, toggleLike, cardTemplate } from "./components/card";
+import { createCard, toggleLike, cardTemplate, deleteCard } from "./components/card";
 import {openModal, closeModal} from "./components/modal";
 import './styles/index.css'; // добавьте импорт главного файла стилей
 import { clearValidation, enableValidation } from "./components/validation.js";
-import {getAboutMe, getInitialCards, patchProfile, postNewCard, deleteCard, defaultUser, patchAvatar} from "./components/api";
+import {getAboutMe, getInitialCards, patchProfile, postNewCard, defaultUser, patchAvatar} from "./components/api";
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileEditForm = document.forms["edit-profile"];
