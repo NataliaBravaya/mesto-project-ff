@@ -3,8 +3,6 @@ import { putLike, deleteLike, deleteCard as deleteCardApi } from "./api.js";
 export const cardTemplate = document.querySelector('#card-template').content;
 
 
-export const placesList = document.querySelector('.places__list');
-
 
 export function createCard(cardTemplate, cardData, deleteCallback, likeCallback, handleImageClick, user) {
     const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -18,7 +16,7 @@ export function createCard(cardTemplate, cardData, deleteCallback, likeCallback,
     image.src = cardData.link;
 
     cardElement.querySelector(".card__title").textContent = cardData.name;
-    cardDeleteBtn.addEventListener("click", (evt) => deleteCallback(evt, cardData));
+    cardDeleteBtn.addEventListener("click", (evt) => deleteCallback(evt, cardData._id));
     likeBtn.addEventListener("click", (evt) => likeCallback(evt, cardData, likeCounter));
     if (cardData.likes.length !== null) {
         likeCounter.textContent = cardData.likes.length

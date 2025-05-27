@@ -1,7 +1,7 @@
 import "./pages/index.css";
 
 import { initialCards } from "./components/cards";
-import { createCard, toggleLike, placesList, cardTemplate } from "./components/card";
+import { createCard, toggleLike, cardTemplate } from "./components/card";
 import {openModal, closeModal} from "./components/modal";
 import './styles/index.css'; // добавьте импорт главного файла стилей
 import { clearValidation, enableValidation } from "./components/validation.js";
@@ -34,7 +34,7 @@ const avatarEditForm = document.forms["edit-avatar"];
 const avatarLinkInput = avatarEditForm.elements.link;
 const profileImage = document.querySelector(".profile__image");
 const avatarSubmitBtn = avatarEditPopup.querySelector('.popup__button');
-
+const placesList = document.querySelector('.places__list');
 
 const validationConfig = {
     formSelector: ".popup__form",
@@ -54,20 +54,29 @@ function handleProfileEdit() {
 }
 
 
+function changeButtonText(button) {
+    button.textContent = "Сохранение...";
+}
+
+
+function revertButtonText(button) {
+    button.textContent = "Сохранить";
+}
+
+
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
-
-    profileEditSubmitBtn.textContent = "Сохранение...";
+    changeButtonText(profileEditSubmitBtn)
 
     patchProfile(profileNameInput.value, profileDescriptionInput.value)
         .then((res) => {
             profileTitle.textContent = res.name;
             profileDescription.textContent = res.about;
         })
-        .catch()
+        .then(() => {closeModal(profileEditPopup);})
+        .catch((error) => {console.log(error);})
         .finally(() => {
-            closeModal(profileEditPopup);
-            profileEditSubmitBtn.textContent = "Сохранить";
+            revertButtonText(profileEditSubmitBtn);
         })
 }
 
@@ -83,8 +92,7 @@ function handleImageClick(card) {
 
 function handleCardFormSubmit(evt) {
     evt.preventDefault();
-
-    newCardSubmitBtn.textContent = "Сохранение...";
+    changeButtonText(newCardSubmitBtn)
 
     postNewCard(newCardNameInput.value, newCardSrcInput.value)
         .then((res) => {
@@ -99,16 +107,21 @@ function handleCardFormSubmit(evt) {
                 )
             );
         })
-        .catch()
+        .then(() => {closeModal(newCardPopup);
+            newCardForm.reset();})
+        .catch((error) => {console.log(error);})
         .finally(() => {
-            newCardForm.reset();
-            closeModal(newCardPopup);
-            newCardSubmitBtn.textContent = "Сохранить";
+            revertButtonText(newCardSubmitBtn)
+
         })
 }
 
 
-newCardAddButton.addEventListener('click',() => openModal(newCardPopup));
+newCardAddButton.addEventListener('click',() => {
+    newCardForm.reset();
+    clearValidation(newCardForm, validationConfig );
+    openModal(newCardPopup);
+});
 profileEditForm.addEventListener('submit', handleProfileFormSubmit);
 profileEditButton.addEventListener('click', handleProfileEdit);
 newCardForm.addEventListener('submit',handleCardFormSubmit);
@@ -122,17 +135,16 @@ function handleAvatarEditClick(element) {
 
 function handleAvatarEditFormSubmit(evt) {
     evt.preventDefault();
-
-    avatarSubmitBtn.textContent = "Сохранение...";
+    changeButtonText(avatarSubmitBtn)
 
     patchAvatar(avatarLinkInput.value)
         .then((res) => {
             profileImage.style.backgroundImage = `url("${res.avatar}")`;
         })
+        .then(() => {closeModal(avatarEditPopup);})
         .catch((err) => console.log(err))
         .finally(() => {
-            closeModal(avatarEditPopup);
-            avatarSubmitBtn.textContent = "Сохранить";
+            revertButtonText(avatarSubmitBtn)
         });
 }
 
